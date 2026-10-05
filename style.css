@@ -1,0 +1,96 @@
+
+
+body { 
+    background: #050518;
+    color :white;
+    text-align: center;
+
+}
+
+.moon{
+    width: 150px;
+    height: 150px;
+    background:white;
+    border-radius :50%;
+    box-shadow: 0 0 30px #f5f1d5
+    
+}
+
+.star {
+    width:5px;
+    height: 5px;
+    background : white;
+    border-radius : 50%;
+
+    box-shadow:
+        100px 30px white,
+        120px 80px white,
+        200px 20px white,
+        300px 100px white;
+    filter : drop-shadow(0 0 5px white);
+
+}
+@keyframes float {
+    0%{
+        transform: translateY(0)
+    }
+    50%{
+        transform:
+translateY(-20px)
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+.love-heart{
+    position: relative;
+    width:100%;
+    height:500px;
+    margin-top: 80px;
+}
+
+.love-heart span {
+    position: absolute;
+    color: #ff5c8a;
+    font-size:10px;
+    white-space: nowrap;
+    text-shadow: 0 0 8px #ff1744;
+}
+
+.memory-pic {
+    width:200px;
+    height: 200px;
+    object-fit: cover;
+border-radius: 50%
+}
+
+.photo-heart {
+    width: 400px;
+    height: 360px;
+    margin: 100px auto;
+
+    display: grid;
+    grid-template-columns: 1fr,1fr;
+
+    gap: 3px;
+
+    overflow: hidden;
+    clip-path: polygon(
+        50% 100%,
+        0 35%,
+        0% 20%,
+        10  5%
+        25 0%
+        50  20% 
+        75  0%
+        90   5%
+        100  20%
+        100 35%
+    );
+}
+
+.photo-heart img{
+    width :100%;
+    height:100%;
+    object-fit:cover;
+}
