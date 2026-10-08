@@ -1,3 +1,16 @@
+function checkPassword(){
+    const password =document.getElementById('password').value;
+    const loginScreen =document.getElementById('login-screen');
+    const errorMessage= document.getElementById('error-message');
+    if (password == 'moonandsun')
+    {
+        loginScreen.style.display ='none';
+
+    } else{
+        errorMessage.textContent= 'wrong password'
+    }      
+}
+
 const heart =document.createElement('div');
 heart.className = "love-heart";
 
