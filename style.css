@@ -1,146 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Caveat:wght@500;600;700&display=swap');
 
-
-body { 
-    background: #050518;
-    color :white;
-    text-align: center;
-
-}
-#login-screen{
-    position:fixed;
-    inset:0;
-
-    background:#050518;
-
-    display:flex;
-    justify-content: center;
-    align-items:center;
-
-    z-index: 9999;
-
+:root {
+  --paper: #fffaf3;
+  --paper-dark: #f8ecdf;
+  --rose: #bd526b;
+  --rose-dark: #87384e;
+  --ink: #49363a;
+  --muted: #856e70;
+  --line: #ead8d0;
+  --shadow: 0 14px 36px rgba(112, 63, 68, 0.10);
 }
 
-.login-box{
-    text-align: center;
-    padding: 30px;
+* {
+  box-sizing: border-box;
 }
 
-.login-box input{
-    display: block;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
 }
 
-#error-message{
-    color:#050518;
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 10% 10%, #f8e1e5 0, transparent 35%),
+    radial-gradient(ellipse at 90% 35%, #f8ead8 0, transparent 32%),
+    var(--paper);
+  font-family: "DM Sans", sans-serif;
+  line-height: 1.85;
+  text-align: center;
 }
 
-.moon{
-    width: 150px;
-    height: 150px;
-    background:white;
-    border-radius :50%;
-    box-shadow: 0 0 30px #f5f1d5
-    
+/* Paper texture effect */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .18;
+  background-image: radial-gradient(#b58b83 0.55px, transparent 0.55px);
+  background-size: 7px 7px;
 }
 
+/* PASSWORD / LOVE LETTER COVER */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse at 15% 15%, #f6dce3, transparent 40%),
+    radial-gradient(ellipse at 85% 90%, #f4e0c8, transparent 40%),
+    #fff8f1;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+
+#login-screen.unlocked {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.login-box {
+  position: relative;
+  width: min(100%, 430px);
+  padding: 44px 28px 38px;
+  border: 1px solid #f0d9d9;
+  border-radius: 5px;
+  background: rgba(255, 253, 249, .94);
+  box-shadow: 0 22px 70px rgba(139, 65, 85, .15);
+  animation: letter-arrives 1s ease both;
+}
+
+.login-box::before {
+  content: "A LETTER FOR YOU";
+  display: block;
+  margin-bottom: 20px;
+  color: var(--rose);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .23em;
+}
+
+.top-heart {
+  margin: 0 0 12px;
+  font-size: 3.3rem;
+  animation: heart-beat 2.4s ease-in-out infinite;
+}
+
+.login-box h1 {
+  margin: 0;
+  color: var(--rose-dark);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.3rem, 8vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.login-box > p:not(#error-message) {
+  margin: 12px 0 26px;
+  color: var(--muted);
+  font-family: "Caveat", cursive;
+  font-size: 1.7rem;
+}
+
+.login-box input {
+  display: block;
+  width: 100%;
+  min-height: 49px;
+  margin: 0 0 13px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  outline: none;
+  background: #fffaf7;
+  color: var(--ink);
+  font: inherit;
+  text-align: center;
+}
+
+.login-box input:focus {
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px #bd526b1c;
+}
+
+.login-box button,
+#music-toggle {
+  min-height: 46px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 30px;
+  background: var(--rose);
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.login-box button {
+  width: 100%;
+}
+
+.login-box button:hover,
+#music-toggle:hover {
+  transform: translateY(-2px);
+  background: var(--rose-dark);
+}
+
+#error-message {
+  min-height: 24px;
+  margin: 10px 0 0;
+  color: #b42345;
+  font-size: .9rem;
+}
+
+/* THE STORY PAGE */
+body > h2,
+body > h3,
+body > h4,
+body > p,
+body > img,
+body > .moon,
+body > .star,
+body > .photo-heart {
+  width: min(88%, 760px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body > h2:first-of-type {
+  margin-top: 76px;
+}
+
+body > h2 {
+  position: relative;
+  margin-top: 65px;
+  margin-bottom: 25px;
+  padding: 23px 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--rose-dark);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+body > h2::after {
+  content: "♡";
+  position: absolute;
+  left: 50%;
+  bottom: -19px;
+  padding: 0 12px;
+  transform: translateX(-50%);
+  background: var(--paper);
+  color: var(--rose);
+  font-size: 1.4rem;
+}
+
+body > h3,
+body > h4 {
+  margin-top: 44px;
+  margin-bottom: 17px;
+  color: var(--rose);
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+body > h4 p {
+  margin: 0;
+  font: inherit;
+}
+
+/* Each paragraph feels like a handwritten journal card */
+body > p {
+  position: relative;
+  padding: clamp(21px, 4vw, 34px);
+  border: 1px solid #f0e2d8;
+  border-radius: 4px;
+  background: rgba(255, 253, 249, .9);
+  box-shadow: var(--shadow);
+  font-size: clamp(.98rem, 2.5vw, 1.07rem);
+  line-height: 2;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+body > p:nth-of-type(even) {
+  transform: rotate(.25deg);
+}
+
+body > p:nth-of-type(odd) {
+  transform: rotate(-.2deg);
+}
+
+/* Photos become Polaroids */
+body > img,
+body > p img,
+.photo-heart img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+body > img {
+  width: min(76%, 390px);
+  margin-top: 38px;
+  margin-bottom: 38px;
+  padding: 10px 10px 35px;
+  border: 1px solid #e9ded5;
+  background: #fffefa;
+  box-shadow: 0 12px 24px rgba(65, 40, 40, .14);
+  transform: rotate(-2deg);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+body > img:nth-of-type(even) {
+  transform: rotate(2deg);
+}
+
+body > img:hover {
+  z-index: 2;
+  transform: rotate(0) scale(1.025);
+  box-shadow: 0 18px 38px rgba(65, 40, 40, .2);
+}
+
+body > p img {
+  width: min(100%, 330px);
+  margin: 20px auto 4px;
+  padding: 8px 8px 25px;
+  border: 1px solid #e9ded5;
+  background: white;
+  box-shadow: 0 8px 20px rgba(65, 40, 40, .12);
+  transform: rotate(1deg);
+}
+
+/* The original decorative moon and star */
+.moon,
 .star {
-    width:5px;
-    height: 5px;
-    background : white;
-    border-radius : 50%;
-
-    box-shadow:
-        100px 30px white,
-        120px 80px white,
-        200px 20px white,
-        300px 100px white;
-    filter : drop-shadow(0 0 5px white);
-
-}
-@keyframes float {
-    0%{
-        transform: translateY(0)
-    }
-    50%{
-        transform:
-translateY(-20px)
-    }
-    100%{
-        transform: translateY(0);
-    }
-}
-.love-heart{
-    position: relative;
-    width:100%;
-    height:500px;
-    margin-top: 80px;
+  display: none;
 }
 
-.love-heart span {
-    position: absolute;
-    color: #ff5c8a;
-    font-size:10px;
-    white-space: nowrap;
-    text-shadow: 0 0 8px #ff1744;
+/* Floating hearts are added by JavaScript */
+.floating-heart {
+  position: fixed;
+  z-index: 0;
+  bottom: -40px;
+  left: var(--left);
+  pointer-events: none;
+  color: var(--heart-color, #d8788d);
+  opacity: 0;
+  animation: float-up var(--duration, 9s) linear forwards;
 }
 
-.memory-pic {
-    width:200px;
-    height: 200px;
-    object-fit: cover;
-border-radius: 50%
+#music-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  box-shadow: 0 6px 22px rgba(112, 63, 68, .2);
+  font-size: .9rem;
 }
 
-.photo-heart {
-    width: 400px;
-    height: 360px;
-    margin: 100px auto;
-
-    display: grid;
-    grid-template-columns: 1fr,1fr;
-
-    gap: 3px;
-
-    overflow: hidden;
-    clip-path: polygon(
-        50% 100%,
-        0 35%,
-        0% 20%,
-        10  5%
-        25 0%
-        50  20% 
-        75  0%
-        90   5%
-        100  20%
-        100 35%
-    );
+#music-toggle:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #bd526b88;
+  outline-offset: 3px;
 }
 
-.photo-heart img{
-    width :100%;
-    height:100%;
-    object-fit:cover;
+.music-note {
+  position: fixed;
+  right: 16px;
+  bottom: 72px;
+  z-index: 100;
+  max-width: calc(100vw - 32px);
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fffaf3;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-size: .8rem;
 }
-.top-heart{
-    font-size: 50px;
-    color: #ff4d6d;
-    text-shadow: 0 0 15px #ff4d6d;
-    margin-top: 30px;
-    animation: hearFloat 2s ease-in-out infinite;
+
+.story-footer {
+  margin: 55px auto 100px;
+  padding: 28px 16px;
+  color: var(--rose-dark);
+  font-family: "Caveat", cursive;
+  font-size: 1.8rem;
 }
-@keyframes hearFloat {
-    0%{
-        transform: translateY(0) scale(1);
-        text-shadow: 0 0 10px #ff4d6d;
-    }
-    50%{
-        transform: translateY(-8px) scale(1.08);
-        text-shadow: 0 0 25px #ff4d6d;
-    }
-    100%{
-        transform: translateY(0) scale(1);
-        text-shadow: 0 0 10px #ff4d6d;
-    }
+
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0);
+  }
+  12% {
+    opacity: .7;
+  }
+  85% {
+    opacity: .45;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) rotate(28deg);
+  }
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.09); }
+}
+
+@keyframes letter-arrives {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  body > h2:first-of-type {
+    margin-top: 42px;
+  }
+
+  body > h2,
+  body > h3,
+  body > h4,
+  body > p,
+  body > img,
+  body > .moon,
+  body > .star,
+  body > .photo-heart {
+    width: calc(100% - 30px);
+  }
+
+  body > p {
+    padding: 20px;
+    line-height: 1.9;
+  }
+
+  body > img {
+    width: min(82%, 340px);
+  }
+
+  .login-box {
+    padding: 35px 22px 28px;
+  }
+
+  #music-toggle {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }
